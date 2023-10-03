@@ -78,8 +78,8 @@ let decrement = (i) => {
   } else {
     search.item -= 1;
   }
-  basket = basket.filter((x) => x.item !== 0);
   update(i.id);
+  basket = basket.filter((x) => x.item !== 0);
   localStorage.setItem("data", JSON.stringify(basket));
 };
 let update = (count) => {
