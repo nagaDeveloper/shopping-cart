@@ -29,7 +29,7 @@ let shopItemsData = [
     },
   ];
 let shop = document.getElementById("shop");
-
+let basket=[];
 let generateItem = ()=>{
     return (shop.innerHTML = shopItemsData.map((item)=>{
         return( `<div id="product-id-${item.id}" class="item">
@@ -40,9 +40,9 @@ let generateItem = ()=>{
             <div class="price-quant">
                 <h2>${item.price}$</h2>
                 <div class="buttons">
-                    <i onclick="increment(${item.id})" class="bi bi-dash"></i>  
+                    <i onclick="decrement(${item.id})" class="bi bi-dash"></i>  
                     <div id=${item.id} class="quantity">0</div>
-                    <i onclick="decrement(${item.id})" class="bi bi-plus"></i>
+                    <i onclick="increment(${item.id})" class="bi bi-plus"></i>
                 </div>
             </div>
         </div>
@@ -52,8 +52,28 @@ let generateItem = ()=>{
 generateItem();
 
 let increment=(i)=>{
-    console.log(i.id);
+    let search = basket.find((x)=>x.id === i.id);
+    if(search === undefined){
+        basket.push({
+            id: i.id,
+            item: 1
+        })
+    }else{
+        search.item += 1;
+    }
+    update(i.id);
 }
 let decrement = (i)=>{
-    console.log(i.id);
+    let search = basket.find((x)=>x.id === i.id);
+    if(search.item === 0){
+        return;
+    }else{
+        search.item -= 1;
+    }
+    update(i.id);
 }
+let update = (count)=>{
+    let search = basket.find((x)=> x.id === count);
+    document.getElementById(count).innerHTML = search.item;
+    console.log(search);
+} 
